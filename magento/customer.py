@@ -36,7 +36,7 @@ class Customer(API):
         :param data: Dictionary of values
         :return: Integer ID of new record
         """
-        return self.call('customer.create', [data])
+        return int(self.call('customer.create', [data]))
 
     def info(self, id, attributes=None):
         """
@@ -99,39 +99,37 @@ class CustomerAddress(API):
         """
         return self.call('customer.list', [customer_id])
 
-    def create(self, data):
+    def create(self, customer_id, data):
         """
         Create a customer using the given data
-        :param data: Dictionary of values
+
+        :param customer_id: ID of customer, whose address is being added
+        :param data: Dictionary of values (country, zip, city, etc...)
         :return: Integer ID of new record
         """
-        return self.call('customer.create', [data])
+        return int(self.call('customer_address.create', [customer_id, data]))
 
-    def info(self, id, attributes=None):
+    def info(self, id):
         """
         Retrieve customer data
 
         :param id: ID of customer
-        :param attributes: `List` of attributes needed
         """
-        if attributes:
-            return self.call('customer.info', [id, attributes])
-        else:
-            return self.call('customer.info', [id])
+        return self.call('customer_address.info', [id])
 
     def update(self, id, data):
         """
-        Update a customer using the given data
-        :param id: ID of the customer record to modify
+        Update a customer address using the given data
+        :param id: ID of the customer address record to modify
         :param data: Dictionary of values
         :return: Boolean
         """
-        return self.call('customer.update', [id, data])
+        return self.call('customer_address.update', [id, data])
 
     def delete(self, id):
         """
-        Delete a customer
-        :param id: ID of customer to delete
+        Delete a customer address
+        :param id: ID of address to delete
         :return: Boolean
         """
-        return self.call('customer.delete', [id])
+        return self.call('customer_address.delete', [id])

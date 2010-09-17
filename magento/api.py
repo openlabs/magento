@@ -59,7 +59,7 @@ class API(object):
         but does not login. This could be used as a connection test
         """
         if self.protocol == 'xmlrpc':
-            self.client = ServerProxy(self.url)
+            self.client = ServerProxy(self.url, allow_none=True)
         else:
             self.client = Client(self.url)
 
