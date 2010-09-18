@@ -9,7 +9,7 @@
     :license: GPLv3, see LICENSE for more details
 '''
 
-from .api import API
+from magento.api import API
 
 class Country(API):
     """

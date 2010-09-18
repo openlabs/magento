@@ -11,7 +11,7 @@
 from xmlrpclib import ServerProxy
 from suds.client import Client
 
-from .utils import expand_url
+from magento.utils import expand_url
 
 class API(object):
     """

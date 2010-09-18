@@ -9,7 +9,7 @@
     :license: GPLv3, see LICENSE for more details
 '''
 
-from .api import API
+from magento.api import API
 
 class Category(API):
     """
@@ -168,6 +168,7 @@ class Category(API):
     def updateproduct(self, category_id, product_id, position=None):
         """
         Update assigned product
+
         :param category_id: ID of a category
         :param product: ID or Code of the product
         :param position: Position of product in category
@@ -186,6 +187,7 @@ class Category(API):
     def removeproduct(self, category_id, product):
         """
         Remove product from category
+
         :param category_id: ID of a category
         :param product: ID or Code of the product
 
@@ -263,10 +265,12 @@ class Product(API):
         Retrieve product list by filters
         
         :param filters: Dictionary of filters.
-            Format :
-                `{<attribute>:{<operator>:<value>}}`
-            Example :
-                `{'firstname':{'ilike':'sharoon'}}` 
+
+               Format :
+                   `{<attribute>:{<operator>:<value>}}`
+               Example :
+                   `{'firstname':{'ilike':'sharoon'}}` 
+
         :store_view: Code or ID of store view
         :return: `list` of `dict`               
         """

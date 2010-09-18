@@ -9,7 +9,7 @@
     :license: GPLv3, see LICENSE for more details
 '''
 
-from .api import API
+from magento.api import API
 
 class Customer(API):
     """
@@ -22,10 +22,10 @@ class Customer(API):
         Retreive list of customers
 
         :param filters: Dictionary of filters.
-            Format :
-                `{<attribute>:{<operator>:<value>}}`
-            Example :
-                `{'firstname':{'ilike':'sharoon'}}`
+
+            Format: `{<attribute>:{<operator>:<value>}}`
+
+            Example: `{'firstname':{'ilike':'sharoon'}}`
         :return: List of dictionaries of matching records
         """
         return self.call('customer.list', filters and [filters] or [])
@@ -33,6 +33,7 @@ class Customer(API):
     def create(self, data):
         """
         Create a customer using the given data
+
         :param data: Dictionary of values
         :return: Integer ID of new record
         """
@@ -53,6 +54,7 @@ class Customer(API):
     def update(self, id, data):
         """
         Update a customer using the given data
+
         :param id: ID of the customer record to modify
         :param data: Dictionary of values
         :return: Boolean
@@ -62,6 +64,7 @@ class Customer(API):
     def delete(self, id):
         """
         Delete a customer
+
         :param id: ID of customer to delete
         :return: Boolean
         """
@@ -93,8 +96,7 @@ class CustomerAddress(API):
         """
         Retreive list of customer Addresses
 
-        :param customer_id:ID of customer whose address needs
-                            to be fetched
+        :param customer_id: ID of customer whose address needs to be fetched
         :return: List of dictionaries of matching records
         """
         return self.call('customer.list', [customer_id])
@@ -120,6 +122,7 @@ class CustomerAddress(API):
     def update(self, id, data):
         """
         Update a customer address using the given data
+
         :param id: ID of the customer address record to modify
         :param data: Dictionary of values
         :return: Boolean
@@ -129,6 +132,7 @@ class CustomerAddress(API):
     def delete(self, id):
         """
         Delete a customer address
+
         :param id: ID of address to delete
         :return: Boolean
         """
