@@ -5,46 +5,29 @@
 
     :copyright: (c) 2010 by Sharoon Thomas.
     :license: GPLv3, see LICENSE for more details
+
+    A simple to use python library to access the magento API and
+    covered by a complete test suite based on Nose tests. Also
+    includes a nose plugin to do the tests based on a config
+    file.
+
+    Example usage::
+    
+        from magento import Customer
+        url = 'http://yourmagento.com'
+        apiuser = 'apiusername'
+        apipass = 'password'
+        with Customer(url, apiuser, apipass) as customer_api:
+            customer_api.list()
+
+    The implemented methods and APIs are from the Core API of 
+    magento documented here: 
+    
+    http://www.magentocommerce.com/support/magento_core_api
+
 '''
-from setuptools import Command, setup
+from setuptools import setup
 import magento
-
-class run_audit(Command):
-    """
-    Audits source code using PyFlakes for following issues:
-    - Names which are used but not defined or used before they are defined.
-    - Names which are redefined without having been used.
-    """
-    description = "Audit source code with PyFlakes"
-    user_options = []
-
-    def initialize_options(self):
-        all = None
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import os, sys
-        try:
-            import pyflakes.scripts.pyflakes as flakes
-        except ImportError:
-            print "Audit requires PyFlakes installed in your system."""
-            sys.exit(-1)
-
-        dirs = ['fedex', 'tests']
-        # Add example directories
-        #dirs.append(os.path.join('examples', dir))
-        warns = 0
-        for dir in dirs:
-            for filename in os.listdir(dir):
-                if filename.endswith('.py') and filename != '__init__.py':
-                    warns += flakes.checkPath(os.path.join(dir, filename))
-        if warns > 0:
-            print ("Audit finished with total %d warnings." % warns)
-        else:
-            print ("No problems found in sourcecode.")
-
 
 setup(
     name = 'magento',
@@ -71,7 +54,5 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    cmdclass={'audit': run_audit},
-    #test_suite='__main__.run_tests'
 )
 
