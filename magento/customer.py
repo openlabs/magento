@@ -6,14 +6,23 @@
     Customer API for magento
 
     :copyright: (c) 2010 by Sharoon Thomas.
-    :license: GPLv3, see LICENSE for more details
+    :copyright: (c) 2010 by Openlabs Technologies & Consulting (P) LTD.
+
+    :license: AGPLv3, see LICENSE for more details
 '''
 
 from magento.api import API
 
 class Customer(API):
     """
-    Customer API to connect to magento
+    Customer API
+
+    Example usage::
+
+        from magento import Customer as CustomerAPI
+
+        with CustomerAPI(url, username, password) as customer_api:
+            return customer_api.list()
     """
     __slots__ = ( )
 

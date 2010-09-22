@@ -6,7 +6,8 @@
     Generic API for magento
 
     :copyright: (c) 2010 by Sharoon Thomas.
-    :license: GPLv3, see LICENSE for more details
+    :copyright: (c) 2010 by Openlabs Technologies & Consulting (P) LTD
+    :license: AGPLv3, see LICENSE for more details
 '''
 from xmlrpclib import ServerProxy
 from suds.client import Client
@@ -29,6 +30,54 @@ class API(object):
     def __init__(self, url, username, password,
                  version='1.3.2.4', full_url=False, protocol='xmlrpc'):
         """
+        This is the Base API class which other APIs have to subclass. By
+        default the inherited classes also get the properties of this
+        class which will allow the use of the API with the `with` statement
+
+        A typical example to extend the API for your subclass is given below::
+
+           from magento.api import API 
+
+            class Core(API):
+            
+                __slots__ = ( )
+
+                def websites(self):
+                    return self.call('ol_websites.list', [])
+
+                def stores(self):
+                    return self.call('ol_groups.list', [])
+
+                def store_views(self):
+                    return self.call('ol_storeviews.list', [])
+
+        The above real life example extends the API for the custom API
+        implementation for the magento extension 
+
+            magento-community/Openlabs_OpenERPConnector
+
+        Example usage ::
+
+            from magento.api import API
+
+            with API(url, username, password) as magento_api:
+                return magento_api.call('customer.list', [])
+
+        .. note:: Python with statement has to be imported from __future__
+        in older versions of python. *from __futur__ import with_statement*
+
+        If you want to use the API as a normal class, then you have to manually
+        end the session. A typical example is below::
+
+            from magento.api import API
+
+            api = API(url, username, password)
+            api.connect()
+            try:
+                return api.call('customer.list', [])
+            finally:
+                api.client.endSession(api.session)
+
         :param url: URL to the magento instance.
                     By default the URL is treated as a base url
                     of the domain to which the api part of the URL

@@ -4,7 +4,8 @@
     Magento API
 
     :copyright: (c) 2010 by Sharoon Thomas.
-    :license: GPLv3, see LICENSE for more details
+    :copyright: (c) 2010 by Openlabs Technologies & Consulting (P) LTD
+    :license: AGPLv3, see LICENSE for more details
 
     A simple to use python library to access the magento API and
     covered by a complete test suite based on Nose tests. Also
@@ -32,8 +33,8 @@ import magento
 setup(
     name = 'magento',
     version=magento.__version__,
-    url='http://openlabs.co.in/projects/python/magento',
-    license='GPL',
+    url='http://projects.openlabs.co.in/trac/openlabs_magento',
+    license='GNU Affero General Public License v3',
     author='Sharoon Thomas, Openlabs Technologies',
     author_email='info@openlabs.co.in',
     description='Magento E-Commerce Integration',
@@ -48,7 +49,7 @@ setup(
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GPL License',
+        'License :: OSI Approved :: GNU Affero General Public License v3', 
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
