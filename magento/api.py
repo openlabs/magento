@@ -9,10 +9,24 @@
     :copyright: (c) 2010 by Openlabs Technologies & Consulting (P) LTD
     :license: AGPLv3, see LICENSE for more details
 '''
-from xmlrpclib import ServerProxy
-from suds.client import Client
+
+PROTOCOLS = []
+try:
+    from xmlrpclib import ServerProxy
+except ImportError:
+    pass
+else:
+    PROTOCOLS.append('xmlrpc')
+
+try:
+    from suds.client import Client
+except ImportError:
+    pass
+else:
+    PROTOCOLS.append('soap')
 
 from magento.utils import expand_url
+
 
 class API(object):
     """
@@ -36,10 +50,10 @@ class API(object):
 
         A typical example to extend the API for your subclass is given below::
 
-           from magento.api import API 
+           from magento.api import API
 
             class Core(API):
-            
+
                 __slots__ = ( )
 
                 def websites(self):
@@ -52,7 +66,7 @@ class API(object):
                     return self.call('ol_storeviews.list', [])
 
         The above real life example extends the API for the custom API
-        implementation for the magento extension 
+        implementation for the magento extension
 
             magento-community/Openlabs_OpenERPConnector
 
@@ -64,7 +78,7 @@ class API(object):
                 return magento_api.call('customer.list', [])
 
         .. note:: Python with statement has to be imported from __future__
-        in older versions of python. *from __futur__ import with_statement*
+        in older versions of python. *from __future__ import with_statement*
 
         If you want to use the API as a normal class, then you have to manually
         end the session. A typical example is below::
@@ -94,7 +108,8 @@ class API(object):
                     be a complete URL
         :param protocol: 'xmlrpc' and 'soap' are valid values
         """
-        assert protocol in ('xmlrpc', 'soap')
+        assert protocol \
+            in PROTOCOLS, "protocol must be %s" % ' OR '.join(PROTOCOLS)
         self.url = full_url and url or expand_url(url, protocol)
         self.username = username
         self.password = password
@@ -121,12 +136,10 @@ class API(object):
             self.connect()
         if self.protocol == 'xmlrpc':
             self.session = self.client.login(
-                                self.username,
-                                self.password)
+                self.username, self.password)
         else:
             self.session = self.client.service.login(
-                                self.username,
-                                self.password)
+                self.username, self.password)
         return self
 
     def __exit__(self, type, value, traceback):
@@ -148,8 +161,8 @@ class API(object):
         if self.protocol == 'xmlrpc':
             return self.client.call(self.session, resource_path, arguments)
         else:
-            return self.client.service.call(self.session,
-                                        resource_path, arguments)
+            return self.client.service.call(
+                self.session, resource_path, arguments)
 
     def multiCall(self, calls, options):
         """
