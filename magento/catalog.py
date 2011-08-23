@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 '''
     magento.catalog
@@ -15,9 +14,10 @@ from mimetypes import guess_type
 
 from magento.api import API
 
+
 class Category(API):
     """
-    Product Category API to connect to magento
+    Product Category API
     """
     __slots__ = ( )
 
@@ -28,10 +28,8 @@ class Category(API):
         :param store_view: Store view ID or Code
         :return: int
         """
-        if store_view is None:
-            return int(self.call('catalog_category.currentStore', []))
-        else:
-            return int(self.call('catalog_category.currentStore', [store_view]))
+        args = [store_view] if store_view else []
+        return int(self.call('catalog_category.currentStore', args))
 
     def tree(self, parent_id=None, store_view=None):
         """
@@ -52,11 +50,8 @@ class Category(API):
         :param parent_category: Parent Category ID
         :return: Dictionary
         """
-        return self.call('catalog_category.level', [
-                                                    website,
-                                                    store_view,
-                                                    parent_category,
-                                                    ]
+        return self.call(
+            'catalog_category.level', [website, store_view, parent_category]
         )
 
     def info(self, category_id, store_view=None, attributes=None):
@@ -68,11 +63,8 @@ class Category(API):
         :param attributes: Return the fields specified
         :return: Dictionary of data
         """
-        return self.call('catalog_category.info', [
-                                                    category_id,
-                                                    store_view,
-                                                    attributes,
-                                                    ]
+        return self.call(
+            'catalog_category.info', [category_id, store_view, attributes]
         )
 
     def create(self, parent_id, data, store_view=None):
@@ -84,11 +76,8 @@ class Category(API):
         :param store_view: Store view ID or Code
         :return: Integer ID
         """
-        return int(self.call('catalog_category.create', [
-                                                         parent_id,
-                                                         data,
-                                                         store_view,
-                                                         ])
+        return int(self.call(
+            'catalog_category.create', [parent_id, data, store_view])
         )
 
     def update(self, category_id, data, store_view=None):
@@ -100,11 +89,10 @@ class Category(API):
         :param store_view: Store view ID or code
         :return: Boolean
         """
-        return bool(self.call('catalog_category.update', [
-                                                          category_id,
-                                                          data,
-                                                          store_view,
-                                                          ])
+        return bool(
+            self.call(
+                'catalog_category.update', [category_id, data, store_view]
+            )
         )
 
     def move(self, category_id, parent_id, after_id=None):
@@ -116,11 +104,8 @@ class Category(API):
         :param after_id: Category ID after what position it will be moved
         :return: Boolean
         """
-        return bool(self.call('catalog_category.move', [
-                                                        category_id,
-                                                        parent_id,
-                                                        after_id,
-                                                        ])
+        return bool(self.call(
+            'catalog_category.move', [category_id, parent_id, after_id])
         )
 
     def delete(self, category_id):
@@ -130,10 +115,7 @@ class Category(API):
         :param category_id: ID of category
         :return: Boolean
         """
-        return bool(self.call('catalog_category.delete', [
-                                                          category_id
-                                                            ])
-        )
+        return bool(self.call('catalog_category.delete', [category_id]))
 
     def assignedproducts(self, category_id, store):
         """
@@ -144,11 +126,11 @@ class Category(API):
 
         :return: Dictionary
         """
-        return self.call('catalog_category.assignedProducts', [
-                                                                category_id,
-                                                                store,
-                                                                ]
+        return self.call(
+            'catalog_category.assignedProducts', [category_id, store]
         )
+
+    #: A proxy for :meth:`assignedproducts`
     assigned_products = assignedproducts
 
     def assignproduct(self, category_id, product, position=None):
@@ -161,12 +143,11 @@ class Category(API):
 
         :return: boolean
         """
-        return bool(self.call('catalog_category.assignProduct', [
-                                                                 category_id,
-                                                                 product,
-                                                                 position,
-                                                                ])
+        return bool(self.call(
+            'catalog_category.assignProduct', [category_id, product, position])
         )
+
+    #: A proxy for :meth:`assignproduct`
     assign_product = assignproduct
 
     def updateproduct(self, category_id, product, position=None):
@@ -179,13 +160,11 @@ class Category(API):
 
         :return: boolean
         """
-        return bool(self.call('catalog_category.updateProduct', [
-                                                                 category_id,
-                                                                 product,
-                                                                 position,
-                                                                ])
+        return bool(self.call(
+            'catalog_category.updateProduct', [category_id, product, position])
         )
 
+    #: A proxy for :meth:`updateproduct`
     update_product = updateproduct
 
     def removeproduct(self, category_id, product):
@@ -197,11 +176,11 @@ class Category(API):
 
         :return: boolean
         """
-        return bool(self.call('catalog_category.removeProduct', [
-                                                                 category_id,
-                                                                 product,
-                                                                 ])
+        return bool(self.call(
+            'catalog_category.removeProduct', [category_id, product])
         )
+
+    #: A proxy for :meth:`removeproduct`
     remove_product = removeproduct
 
 
@@ -219,12 +198,8 @@ class CategoryAttribute(API):
         :param store_view: Store view ID or Code
         :return: int
         """
-        if store_view is None:
-            return int(self.call('catalog_category_attribute.currentStore', []))
-        else:
-            return int(self.call('catalog_category_attribute.currentStore',
-                                [store_view])
-            )
+        args = [store_view] if store_view else []
+        return int(self.call('catalog_category_attribute.currentStore', args))
 
     def list(self):
         """
@@ -241,8 +216,9 @@ class CategoryAttribute(API):
 
         :return: list of dictionary
         """
-        return self.call('category_attribute.options', [attribute_id,
-                                                        store_view])
+        return self.call(
+            'category_attribute.options', [attribute_id, store_view]
+        )
 
 
 class Product(API):
@@ -258,11 +234,8 @@ class Product(API):
         :param store_view: Store view ID or Code
         :return: int
         """
-        if store_view is None:
-            return int(self.call('catalog_product.currentStore', []))
-        else:
-            return int(self.call('catalog_product.currentStore', [store_view])
-            )
+        args = [store_view] if store_view else []
+        return int(self.call('catalog_product.currentStore', args))
 
     def list(self, filters=None, store_view=None):
         """
@@ -289,9 +262,8 @@ class Product(API):
         :param attributes: List of fields required
         :return: `dict` of values
         """
-        return self.call('catalog_product.info', [product,
-                                                  store_view,
-                                                  attributes]
+        return self.call(
+            'catalog_product.info', [product, store_view, attributes]
         )
 
     def create(self, product_type, attribute_set_id, sku, data):
@@ -304,12 +276,10 @@ class Product(API):
         :param data: Dictionary of data
         :return: INT id of product created
         """
-        return int(self.call('catalog_product.create', [
-                                                        product_type,
-                                                        attribute_set_id,
-                                                        sku,
-                                                        data,
-                                                        ])
+        return int(self.call(
+            'catalog_product.create', 
+            [product_type, attribute_set_id, sku, data]
+            )
         )
 
     def update(self, product, data, store_view=None):
@@ -322,11 +292,8 @@ class Product(API):
 
         :return: Boolean
         """
-        return bool(self.call('catalog_product.update', [
-                                                         product,
-                                                         data,
-                                                         store_view,
-                                                        ])
+        return bool(self.call(
+            'catalog_product.update', [product, data, store_view])
         )
 
     def setSpecialPrice(self, product, special_price=None,
@@ -342,13 +309,10 @@ class Product(API):
 
         :return: Boolean
         """
-        return bool(self.call('catalog_product.setSpecialPrice', [
-                                                                  product,
-                                                                  special_price,
-                                                                  from_date,
-                                                                  to_date,
-                                                                  store_view
-                                                                    ])
+        return bool(self.call(
+            'catalog_product.setSpecialPrice', 
+            [product, special_price, from_date, to_date, store_view]
+            )
         )
 
     def getSpecialPrice(self, product, store_view=None):
@@ -360,10 +324,8 @@ class Product(API):
 
         :return: Dictionary
         """
-        return self.call('catalog_product.getSpecialPrice', [
-                                                             product,
-                                                             store_view,
-                                                            ]
+        return self.call(
+            'catalog_product.getSpecialPrice', [product, store_view]
         )
 
     def delete(self, product):
@@ -373,8 +335,7 @@ class Product(API):
         :param product: ID or SKU of product
         :return: Boolean
         """
-        return bool(self.call('catalog_product.delete', [product])
-        )
+        return bool(self.call('catalog_product.delete', [product]))
 
 
 class ProductAttribute(API):
@@ -390,11 +351,8 @@ class ProductAttribute(API):
         :param store_view: Store view ID or Code
         :return: int
         """
-        args = []
-        if store_view:
-            args = [store_view]
-        return int(self.call('catalog_product_attribute.currentStore',
-            args))
+        args = [store_view] if store_view else []
+        return int(self.call('catalog_product_attribute.currentStore', args))
 
     def list(self, attribute_set_id):
         """

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 '''
     magento.api
@@ -172,4 +171,3 @@ class API(object):
             return self.client.multiCall(self.session, calls, options)
         else:
             return self.client.service.multiCall(self.session, calls, options)
-

@@ -9,8 +9,8 @@
     :copyright: (c) 2010 by Openlabs Technologies & Consulting (P) LTD
     :license: AGPLv3, see LICENSE for more details
 '''
-
 from .api import API
+
 
 class Order(API):
     """
@@ -53,16 +53,13 @@ class Order(API):
         """
         if comment is None:
             comment = u""
-        return bool(
-            self.call(
-                'sales_order.addComment', [
-                    order_increment_id,
-                    status,
-                    comment,
-                    notify
-                    ]
-                )
+        return bool(self.call(
+                'sales_order.addComment',
+                [order_increment_id, status, comment, notify]
             )
+        )
+
+    #: A proxy for :meth:`addcomment`
     addComment = addcomment
 
     def hold(self, order_increment_id):
@@ -117,9 +114,7 @@ class Shipment(API):
 
         :param shipment_increment_id: Order ID
         """
-        return self.call(
-            'sales_order_shipment.info', [shipment_increment_id]
-            )
+        return self.call('sales_order_shipment.info', [shipment_increment_id])
 
     def create(self, order_increment_id, 
             items_qty, comment=None, email=True, include_comment=False):
@@ -154,14 +149,12 @@ class Shipment(API):
         """
         return bool(
             self.call(
-                'sales_order_shipment.addComment', [
-                    shipment_increment_id,
-                    comment,
-                    email,
-                    include_in_email,
-                    ]
-                )
+                'sales_order_shipment.addComment', 
+                [shipment_increment_id, comment, email, include_in_email]
             )
+        )
+
+    #: A proxy for :meth:`addcomment`
     addComment = addcomment
 
     def addtrack(self, shipment_increment_id, carrier, title, track_number):
@@ -175,11 +168,10 @@ class Shipment(API):
         """
         return self.call(
             'sales_order_shipment.addTrack',
-            [
-                shipment_increment_id,
-                carrier, title, track_number
-                ]
-            )
+            [shipment_increment_id, carrier, title, track_number]
+        )
+
+    #: A proxy for :meth:`addtrack`
     addTrack = addtrack
 
     def removetrack(self, shipment_increment_id, track_id):
@@ -193,8 +185,10 @@ class Shipment(API):
             self.call(
                 'sales_order_shipment.removeTrack',
                 [shipment_increment_id, track_id]
-                )
             )
+        )
+
+    #: A proxy for :meth:`removetrack`
     removeTrack = removetrack
 
     def getcarriers(self, order_increment_id):
@@ -205,10 +199,11 @@ class Shipment(API):
         """
         return bool(
             self.call(
-                'sales_order_shipment.getCarriers', 
-                [order_increment_id]
-                )
+                'sales_order_shipment.getCarriers', [order_increment_id]
             )
+        )
+
+    #: A proxy for :meth:`getcarriers`
     getCarriers = getcarriers
 
 
@@ -241,7 +236,7 @@ class Invoice(API):
         """
         return self.call(
             'sales_order_invoice.info', [invoice_increment_id]
-            )
+        )
 
     def create(self, order_increment_id, items_qty, 
             comment=None, email=True, include_comment=False):
@@ -262,9 +257,8 @@ class Invoice(API):
         :rtype: str
         """
         return self.call(
-            'sales_order_invoice.create', [
-                order_increment_id, items_qty, comment, email, include_comment
-            ]
+            'sales_order_invoice.create', 
+            [order_increment_id, items_qty, comment, email, include_comment]
         )
 
     def addcomment(self, invoice_increment_id,
@@ -279,14 +273,11 @@ class Invoice(API):
         return bool(
             self.call(
                 'sales_order_invoice.addComment',
-                [
-                    invoice_increment_id,
-                    comment,
-                    email,
-                    include_comment,
-                    ]
-                )
+                [invoice_increment_id, comment, email, include_comment]
             )
+        )
+
+    #: Add a proxy for :meth:`addcomment`
     addComment = addcomment
 
     def capture(self, invoice_increment_id):
@@ -313,10 +304,7 @@ class Invoice(API):
         :rtype: bool
         """
         return bool(
-            self.call(
-                'sales_order_invoice.capture',
-                [invoice_increment_id]
-                )
+            self.call('sales_order_invoice.capture', [invoice_increment_id])
         )
 
     def void(self, invoice_increment_id):
@@ -340,6 +328,3 @@ class Invoice(API):
         return bool(
             self.call('sales_order_invoice.cancel', [invoice_increment_id])
         )
-
-
-

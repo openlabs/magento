@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 '''
     magento.customer
@@ -10,8 +9,8 @@
 
     :license: AGPLv3, see LICENSE for more details
 '''
-
 from magento.api import API
+
 
 class Customer(API):
     """
