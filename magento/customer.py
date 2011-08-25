@@ -107,7 +107,7 @@ class CustomerAddress(API):
         :param customer_id: ID of customer whose address needs to be fetched
         :return: List of dictionaries of matching records
         """
-        return self.call('customer.list', [customer_id])
+        return self.call('customer_address.list', [customer_id])
 
     def create(self, customer_id, data):
         """
