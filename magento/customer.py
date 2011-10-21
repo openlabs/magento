@@ -36,7 +36,7 @@ class Customer(API):
             Example: `{'firstname':{'ilike':'sharoon'}}`
         :return: List of dictionaries of matching records
         """
-        return self.call('customer.list', filters and [filters] or [])
+        return self.call('customer.list', filters and [filters] or [{}])
 
     def create(self, data):
         """
