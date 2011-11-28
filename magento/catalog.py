@@ -635,6 +635,49 @@ class ProductLinks(API):
         """
         return self.call('catalog_product_link.attributes', [link_type])
 
+class ProductConfigurable(API):
+    """
+    Product Configurable API for magento
+    """
+    __slots__ = ( )
+
+    def info(self, product):
+        """
+        Configurable product Info
+
+        :param product: ID or SKU of product
+        :return: List
+        """
+        return self.call('ol_catalog_product_link.list', [product])
+
+    def getSuperAttributes(self, product):
+        """
+        Configurable Attributes product
+
+        :param product: ID or SKU of product
+        :return: List
+        """
+        return self.call('ol_catalog_product_link.listSuperAttributes', [product])
+
+    def update(self, product, linked_products, attributes):
+        """
+        Configurable Update product
+
+        :param product: ID or SKU of product
+        :param linked_products: List ID or SKU of linked product to link
+        :param attributes: dicc
+        :return: True/False
+        """
+        return bool(self.call('ol_catalog_product_link.assign', [product, linked_products, attributes]))
+
+    def remove(self, product, linked_products):
+        """
+        Remove a product link configurable
+
+        :param product: ID or SKU of product
+        :param linked_products: List ID or SKU of linked product to unlink
+        """
+        return bool(self.call('ol_catalog_product_link.remove', [product, linked_products]))
 
 class Inventory(API):
     """
