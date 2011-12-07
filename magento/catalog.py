@@ -363,6 +363,15 @@ class ProductAttribute(API):
         """
         return self.call('catalog_product_attribute.list', [attribute_set_id])
 
+    def info(self, attribute):
+        """
+        Retrieve product attribute info
+
+        :param attribute: ID or Code of the attribute
+        :return: `list` of `dict`
+        """
+        return self.call('ol_catalog_product_attribute.info', [attribute])
+
     def options(self, attribute, store_view=None):
         """
         Retrieve product attribute options
