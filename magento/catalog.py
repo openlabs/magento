@@ -668,6 +668,16 @@ class ProductConfigurable(API):
         """
         return self.call('ol_catalog_product_link.listSuperAttributes', [product])
 
+    def setSuperAttributeValues(self, product, attribute):
+        """
+        Configurable Attributes product
+
+        :param product: ID or SKU of product
+        :param attribute: ID attribute
+        :return: List
+        """
+        return self.call('ol_catalog_product_link.setSuperAttributeValues', [product, attribute])
+
     def update(self, product, linked_products, attributes):
         """
         Configurable Update product
