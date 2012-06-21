@@ -37,7 +37,7 @@ setup(
     license='GNU Affero General Public License v3',
     author='Sharoon Thomas, Openlabs Technologies',
     author_email='info@openlabs.co.in',
-    description='Magento E-Commerce Integration',
+    description='Magento Core API Client',
     long_description=__doc__,
     packages=['magento'],
     zip_safe=False,
