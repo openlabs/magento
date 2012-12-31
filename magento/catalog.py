@@ -382,6 +382,17 @@ class ProductAttribute(API):
         return self.call('catalog_product_attribute.options',
                 [attribute, store_view])
 
+    def createOption(self, attribute, data):
+        """
+        Create new options to attribute
+
+        :param attribute: ID or Code of the attribute.
+        :param data: Dictionary of Data.
+        :return: True if created.
+        """
+        return bool(self.call('product_attribute.addOption',
+            [attribute, data]))
+
 class ProductAttributeSet(API):
     """
     Product Attribute Set API
