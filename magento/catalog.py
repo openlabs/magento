@@ -384,15 +384,26 @@ class ProductAttribute(API):
 
     def createOption(self, attribute, data):
         """
-        Create new options to attribute
+        Create new options to attribute (Magento > 1.7.0)
 
         :param attribute: ID or Code of the attribute.
         :param data: Dictionary of Data.
+            {'label':[{'store_id':[0,1], 'value':'Value'},], 'order':1, 'is_default':1}
         :return: True if created.
         """
-        print "Test Create Option"
         return bool(self.call('product_attribute.addOption',
             [attribute, data]))
+
+    def removeOption(self, attribute, option):
+        """
+        Remove option to attribute (Magento > 1.7.0)
+
+        :param attribute: ID or Code of the attribute.
+        :param option: Option ID.
+        :return: True if the option is removed.
+        """
+        return bool(self.call('product_attribute.removeOption',
+            [attribute, option]))
 
 
 class ProductAttributeSet(API):
