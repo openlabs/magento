@@ -370,7 +370,7 @@ class ProductAttribute(API):
         :param attribute: ID or Code of the attribute
         :return: `list` of `dict`
         """
-        return self.call('ol_catalog_product_attribute.info', [attribute])
+        return self.call('catalog_product_attribute.info', [attribute])
 
     def options(self, attribute, store_view=None):
         """
