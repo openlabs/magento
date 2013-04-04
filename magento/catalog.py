@@ -412,6 +412,27 @@ class ProductAttribute(API):
         return bool(self.call('product_attribute.removeOption',
             [attribute, option]))
 
+    def create(self, data):
+        """
+        Create attribute entity.
+
+        :param data: Dictionary of entity data to create attribute with.
+
+        :return: Integer ID of attribute created
+        """
+        return self.call('catalog_product_attribute.create', [data])
+
+    def update(self, attribute, data):
+        """
+        Update attribute entity data.
+
+        :param attribute: ID or Code of the attribute.
+        :param data: Dictionary of entity data to update on attribute.
+
+        :return: Boolean
+        """
+        return self.call('catalog_product_attribute.update', [attribute, data])
+
 
 class ProductAttributeSet(API):
     """
@@ -426,6 +447,41 @@ class ProductAttributeSet(API):
         :return: `list` of `dict`
         """
         return self.call('catalog_product_attribute_set.list', [])
+
+    def create(self, attribute_set_name, skeleton_set_id):
+        """
+        Create a new attribute set based on a "skeleton" attribute set.
+        If unsure, use the "Default" attribute set as a skeleton.
+
+        :param attribute_set_name: name of the new attribute set
+        :param skeleton_set_id: id of the skeleton attribute set to base this set on.
+
+        :return: Integer ID of new attribute set
+        """
+        return self.call('catalog_product_attribute_set.create', [attribute_set_name, skeleton_set_id])
+
+    def attributeAdd(self, attribute_id, attribute_set_id):
+        """
+        Add an existing attribute to an attribute set.
+
+        :param attribute_id: ID of the attribute to add
+        :param attribute_set_id: ID of the attribute set to add to
+
+        :return: Boolean
+        """
+        return self.call('catalog_product_attribute_set.attributeAdd', [attribute_id, attribute_set_id])
+
+    def attributeRemove(self, attribute_id, attribute_set_id):
+        """
+        Remove an existing attribute to an attribute set.
+
+        :param attribute_id: ID of the attribute to remove
+        :param attribute_set_id: ID of the attribute set to remove from
+
+        :return: Boolean
+        """
+        return self.call('catalog_product_attribute_set.attributeRemove', [attribute_id, attribute_set_id])
+
 
 
 class ProductTypes(API):
