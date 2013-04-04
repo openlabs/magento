@@ -671,7 +671,10 @@ class ProductLinks(API):
 
 class ProductConfigurable(API):
     """
-    Product Configurable API for magento
+    Product Configurable API for magento.
+
+    These API endpoints only work if you have zikzakmedia's
+    magento_webservices Magento plugin installed.
     """
     __slots__ = ()
 
