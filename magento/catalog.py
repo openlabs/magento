@@ -10,6 +10,7 @@
 '''
 
 import base64
+import warnings
 from mimetypes import guess_type
 
 from magento.api import API
@@ -382,7 +383,7 @@ class ProductAttribute(API):
         return self.call('catalog_product_attribute.options',
                 [attribute, store_view])
 
-    def createOption(self, attribute, data):
+    def addOption(self, attribute, data):
         """
         Create new options to attribute (Magento > 1.7.0)
 
@@ -393,6 +394,12 @@ class ProductAttribute(API):
         """
         return bool(self.call('product_attribute.addOption',
             [attribute, data]))
+
+    def createOption(self, *a, **kw):
+        warnings.warn(
+        "ProductAttribute: createOption is deprecated, use addOption instead."
+        )
+        return self.addOption(*a, **kw)
 
     def removeOption(self, attribute, option):
         """
