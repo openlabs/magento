@@ -9,9 +9,7 @@
     :license: AGPLv3, see LICENSE for more details
 '''
 
-import base64
 import warnings
-from mimetypes import guess_type
 
 from magento.api import API
 
@@ -551,28 +549,18 @@ class ProductImages(API):
         return self.call('catalog_product_attribute_media.types',
                 [attribute_set_id])
 
-    def create(self, product, image, image_name, image_mime=None,
-            store_view=None):
+    def create(self, product, data, store_view=None):
         """
         Upload a new product image.
 
         :param product: ID or SKU of product
-        :param image: The binary data of image
-        :param image_name: The name to give the image file.
-                Eg 'my_image_thumb.jpg'
-        :param image_mime: The mime type of the image.
+        :param data: `dict` of image data (label, position, exclude, types)
+            Example: { 'label': 'description of photo',
+                'position': '1', 'exclude': '0',
+                'types': ['image', 'small_image', 'thumbnail']}
         :param store_view: Store view ID or Code
         :return: string - image file name
         """
-        if image_mime is None:
-            image_mime = guess_type(image_name)
-        data = {
-            'file': {
-                    'content': base64.b64encode(image),
-                    'name': image_name,
-                    'mime': image_mime,
-                        }
-                }
         return self.call('catalog_product_attribute_media.create',
                 [product, data, store_view])
 
