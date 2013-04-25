@@ -16,7 +16,7 @@ execfile(os.path.join('magento', 'version.py'))
 setup(
     name = 'magento',
     version=VERSION,
-    url='http://projects.openlabs.co.in/trac/openlabs_magento',
+    url='https://github.com/openlabs/magento/',
     license='GNU Affero General Public License v3',
     author='Sharoon Thomas, Openlabs Technologies',
     author_email='info@openlabs.co.in',
@@ -29,7 +29,7 @@ setup(
         'suds>=0.3.9',
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 6 - Mature',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Affero General Public License v3', 
