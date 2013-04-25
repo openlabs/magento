@@ -163,11 +163,11 @@ class API(object):
             return self.client.service.call(
                 self.session, resource_path, arguments)
 
-    def multiCall(self, calls, options):
+    def multiCall(self, calls):
         """
         Proxy for multicalls
         """
         if self.protocol == 'xmlrpc':
-            return self.client.multiCall(self.session, calls, options)
+            return self.client.multiCall(self.session, calls)
         else:
-            return self.client.service.multiCall(self.session, calls, options)
+            return self.client.service.multiCall(self.session, calls)

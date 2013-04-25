@@ -2,7 +2,7 @@
 '''
     magento.sales
 
-    Allows to export/import sales orders from/into Magento, 
+    Allows to export/import sales orders from/into Magento,
     to create invoices, shipments, credit memos
 
     :copyright: (c) 2010 by Sharoon Thomas.
@@ -16,7 +16,7 @@ class Order(API):
     """
     Allows to import/export orders.
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self, filters=None):
         """
@@ -52,7 +52,7 @@ class Order(API):
         TODO: Identify possible values for status
         """
         if comment is None:
-            comment = u""
+            comment = ""
         return bool(self.call(
                 'sales_order.addComment',
                 [order_increment_id, status, comment, notify]
@@ -91,7 +91,7 @@ class Shipment(API):
     """
     Allows create/export order shipments.
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self, filters=None):
         """
@@ -116,7 +116,7 @@ class Shipment(API):
         """
         return self.call('sales_order_shipment.info', [shipment_increment_id])
 
-    def create(self, order_increment_id, 
+    def create(self, order_increment_id,
             items_qty, comment=None, email=True, include_comment=False):
         """
         Create new shipment for order
@@ -133,7 +133,7 @@ class Shipment(API):
         :type include_comment: bool
         """
         if comment is None:
-            comment = u''
+            comment = ''
         return self.call(
             'sales_order_shipment.create', [
                 order_increment_id, items_qty, comment, email, include_comment
@@ -149,7 +149,7 @@ class Shipment(API):
         """
         return bool(
             self.call(
-                'sales_order_shipment.addComment', 
+                'sales_order_shipment.addComment',
                 [shipment_increment_id, comment, email, include_in_email]
             )
         )
@@ -211,7 +211,7 @@ class Invoice(API):
     """
     Allows create/export order invoices
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self, filters=None):
         """
@@ -238,7 +238,7 @@ class Invoice(API):
             'sales_order_invoice.info', [invoice_increment_id]
         )
 
-    def create(self, order_increment_id, items_qty, 
+    def create(self, order_increment_id, items_qty,
             comment=None, email=True, include_comment=False):
         """
         Create new invoice for order
@@ -257,7 +257,7 @@ class Invoice(API):
         :rtype: str
         """
         return self.call(
-            'sales_order_invoice.create', 
+            'sales_order_invoice.create',
             [order_increment_id, items_qty, comment, email, include_comment]
         )
 
@@ -269,7 +269,7 @@ class Invoice(API):
         :param invoice_increment_id: Invoice ID
         """
         if comment is None:
-            comment = u""
+            comment = ""
         return bool(
             self.call(
                 'sales_order_invoice.addComment',
@@ -284,20 +284,20 @@ class Invoice(API):
         """
         Capture Invoice
 
-        :attention: You should check the invoice to see if can be 
-        captured before attempting to capture an invoice, otherwise 
+        :attention: You should check the invoice to see if can be
+        captured before attempting to capture an invoice, otherwise
         the API call with generate an error.
 
-        Invoices have states as defined in the model 
+        Invoices have states as defined in the model
         Mage_Sales_Model_Order_Invoice:
 
         STATE_OPEN = 1
         STATE_PAID = 2
         STATE_CANCELED = 3
 
-        Also note there is a method call in the model that checks this 
-        for you canCapture(), and it also verifies that the payment is 
-        able to be captured, so the invoice state might not be the only 
+        Also note there is a method call in the model that checks this
+        for you canCapture(), and it also verifies that the payment is
+        able to be captured, so the invoice state might not be the only
         condition that’s required to allow it to be captured.
 
         :param invoice_increment_id: Invoice ID

@@ -23,7 +23,7 @@ class Customer(API):
         with CustomerAPI(url, username, password) as customer_api:
             return customer_api.list()
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self, filters=None):
         """
@@ -83,7 +83,7 @@ class CustomerGroup(API):
     """
     Customer Group API to connect to magento
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self):
         """

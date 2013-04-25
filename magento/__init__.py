@@ -14,15 +14,15 @@ __all__ = [
             'Country', 'Region',
             'Category', 'CategoryAttribute', 'Product', 'ProductAttribute',
             'ProductAttributeSet', 'ProductTypes', 'ProductImages',
-            'ProductTierPrice', 'ProductLinks', 'Inventory',
-            'Order', 'Shipment', 'Invoice',
+            'ProductTierPrice', 'ProductLinks', 'ProductConfigurable',
+            'Inventory', 'Order', 'Shipment', 'Invoice',
             ]
 
-from api import API
-from customer import Customer, CustomerGroup, CustomerAddress
-from directory import Country, Region
-from catalog import Category, CategoryAttribute
-from catalog import Product, ProductAttribute, ProductAttributeSet
-from catalog import ProductTypes, ProductImages, ProductTierPrice
-from catalog import ProductLinks, Inventory
-from sales import Order, Shipment, Invoice
+from .api import API
+from .customer import Customer, CustomerGroup, CustomerAddress
+from .directory import Country, Region
+from .catalog import Category, CategoryAttribute
+from .catalog import Product, ProductAttribute, ProductAttributeSet
+from .catalog import ProductTypes, ProductImages, ProductTierPrice
+from .catalog import ProductLinks, ProductConfigurable, Inventory
+from .sales import Order, Shipment, Invoice

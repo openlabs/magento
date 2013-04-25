@@ -9,8 +9,7 @@
     :license: AGPLv3, see LICENSE for more details
 '''
 
-import base64
-from mimetypes import guess_type
+import warnings
 
 from magento.api import API
 
@@ -19,7 +18,7 @@ class Category(API):
     """
     Product Category API
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def currentStore(self, store_view=None):
         """
@@ -189,7 +188,7 @@ class CategoryAttribute(API):
     Product Category Attribute API to connect to magento
     Allows to get attributes and options for category.
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def currentStore(self, store_view=None):
         """
@@ -225,7 +224,7 @@ class Product(API):
     """
     Product API for magento
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def currentStore(self, store_view=None):
         """
@@ -277,7 +276,7 @@ class Product(API):
         :return: INT id of product created
         """
         return int(self.call(
-            'catalog_product.create', 
+            'catalog_product.create',
             [product_type, attribute_set_id, sku, data]
             )
         )
@@ -310,7 +309,7 @@ class Product(API):
         :return: Boolean
         """
         return bool(self.call(
-            'catalog_product.setSpecialPrice', 
+            'catalog_product.setSpecialPrice',
             [product, special_price, from_date, to_date, store_view]
             )
         )
@@ -342,7 +341,7 @@ class ProductAttribute(API):
     """
     Product Attribute API
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def currentStore(self, store_view=None):
         """
@@ -363,6 +362,15 @@ class ProductAttribute(API):
         """
         return self.call('catalog_product_attribute.list', [attribute_set_id])
 
+    def info(self, attribute):
+        """
+        Retrieve product attribute info
+
+        :param attribute: ID or Code of the attribute
+        :return: `list` of `dict`
+        """
+        return self.call('catalog_product_attribute.info', [attribute])
+
     def options(self, attribute, store_view=None):
         """
         Retrieve product attribute options
@@ -373,11 +381,62 @@ class ProductAttribute(API):
         return self.call('catalog_product_attribute.options',
                 [attribute, store_view])
 
+    def addOption(self, attribute, data):
+        """
+        Create new options to attribute (Magento > 1.7.0)
+
+        :param attribute: ID or Code of the attribute.
+        :param data: Dictionary of Data.
+            {'label':[{'store_id':[0,1], 'value':'Value'},], 'order':1, 'is_default':1}
+        :return: True if created.
+        """
+        return bool(self.call('product_attribute.addOption',
+            [attribute, data]))
+
+    def createOption(self, *a, **kw):
+        warnings.warn(
+        "ProductAttribute: createOption is deprecated, use addOption instead."
+        )
+        return self.addOption(*a, **kw)
+
+    def removeOption(self, attribute, option):
+        """
+        Remove option to attribute (Magento > 1.7.0)
+
+        :param attribute: ID or Code of the attribute.
+        :param option: Option ID.
+        :return: True if the option is removed.
+        """
+        return bool(self.call('product_attribute.removeOption',
+            [attribute, option]))
+
+    def create(self, data):
+        """
+        Create attribute entity.
+
+        :param data: Dictionary of entity data to create attribute with.
+
+        :return: Integer ID of attribute created
+        """
+        return self.call('catalog_product_attribute.create', [data])
+
+    def update(self, attribute, data):
+        """
+        Update attribute entity data.
+
+        :param attribute: ID or Code of the attribute.
+        :param data: Dictionary of entity data to update on attribute.
+
+        :return: Boolean
+        """
+        return self.call('catalog_product_attribute.update', [attribute, data])
+
+
 class ProductAttributeSet(API):
     """
     Product Attribute Set API
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self):
         """
@@ -385,14 +444,49 @@ class ProductAttributeSet(API):
 
         :return: `list` of `dict`
         """
-        return self.call('catalog_product_attribute_set.list', [ ])
+        return self.call('catalog_product_attribute_set.list', [])
+
+    def create(self, attribute_set_name, skeleton_set_id):
+        """
+        Create a new attribute set based on a "skeleton" attribute set.
+        If unsure, use the "Default" attribute set as a skeleton.
+
+        :param attribute_set_name: name of the new attribute set
+        :param skeleton_set_id: id of the skeleton attribute set to base this set on.
+
+        :return: Integer ID of new attribute set
+        """
+        return self.call('catalog_product_attribute_set.create', [attribute_set_name, skeleton_set_id])
+
+    def attributeAdd(self, attribute_id, attribute_set_id):
+        """
+        Add an existing attribute to an attribute set.
+
+        :param attribute_id: ID of the attribute to add
+        :param attribute_set_id: ID of the attribute set to add to
+
+        :return: Boolean
+        """
+        return self.call('catalog_product_attribute_set.attributeAdd', [attribute_id, attribute_set_id])
+
+    def attributeRemove(self, attribute_id, attribute_set_id):
+        """
+        Remove an existing attribute to an attribute set.
+
+        :param attribute_id: ID of the attribute to remove
+        :param attribute_set_id: ID of the attribute set to remove from
+
+        :return: Boolean
+        """
+        return self.call('catalog_product_attribute_set.attributeRemove', [attribute_id, attribute_set_id])
+
 
 
 class ProductTypes(API):
     """
     Product Types API
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self):
         """
@@ -400,14 +494,14 @@ class ProductTypes(API):
 
         :return: `list` of `dict`
         """
-        return self.call('catalog_product_type.list', [ ])
+        return self.call('catalog_product_type.list', [])
 
 
 class ProductImages(API):
     """
     Product Images API
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def currentStore(self, store_view=None):
         """
@@ -416,7 +510,7 @@ class ProductImages(API):
         :param store_view: Store view ID or Code
         :return: int
         """
-        args = [ ]
+        args = []
         if store_view:
             args = [store_view]
         return int(self.call('catalog_product_attribute_media.currentStore',
@@ -455,28 +549,18 @@ class ProductImages(API):
         return self.call('catalog_product_attribute_media.types',
                 [attribute_set_id])
 
-    def create(self, product, image, image_name, image_mime=None,
-            store_view=None):
+    def create(self, product, data, store_view=None):
         """
         Upload a new product image.
 
         :param product: ID or SKU of product
-        :param image: The binary data of image
-        :param image_name: The name to give the image file. 
-                Eg 'my_image_thumb.jpg'
-        :param image_mime: The mime type of the image.
+        :param data: `dict` of image data (label, position, exclude, types)
+            Example: { 'label': 'description of photo',
+                'position': '1', 'exclude': '0',
+                'types': ['image', 'small_image', 'thumbnail']}
         :param store_view: Store view ID or Code
         :return: string - image file name
         """
-        if image_mime is None:
-            image_mime = guess_type(image_name)
-        data = {
-            'file': {
-                    'content': base64.b64encode(image),
-                    'name': image_name,
-                    'mime': image_mime,
-                        }
-                }
         return self.call('catalog_product_attribute_media.create',
                 [product, data, store_view])
 
@@ -514,7 +598,7 @@ class ProductTierPrice(API):
     """
     Product Tier Price API
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def info(self, product):
         """
@@ -556,7 +640,7 @@ class ProductLinks(API):
     """
     Product links API (related, cross sells, up sells, grouped)
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self, link_type, product):
         """
@@ -618,7 +702,7 @@ class ProductLinks(API):
 
         :return: `list` of types
         """
-        return self.call('catalog_product_link.types', [ ])
+        return self.call('catalog_product_link.types', [])
 
     def attributes(self, link_type):
         """
@@ -636,11 +720,73 @@ class ProductLinks(API):
         return self.call('catalog_product_link.attributes', [link_type])
 
 
+class ProductConfigurable(API):
+    """
+    Product Configurable API for magento.
+
+    These API endpoints only work if you have zikzakmedia's
+    magento_webservices Magento plugin installed.
+    """
+    __slots__ = ()
+
+    def info(self, product):
+        """
+        Configurable product Info
+
+        :param product: ID or SKU of product
+        :return: List
+        """
+        return self.call('ol_catalog_product_link.list', [product])
+
+    def getSuperAttributes(self, product):
+        """
+        Configurable Attributes product
+
+        :param product: ID or SKU of product
+        :return: List
+        """
+        return self.call('ol_catalog_product_link.listSuperAttributes',
+            [product])
+
+    def setSuperAttributeValues(self, product, attribute):
+        """
+        Configurable Attributes product
+
+        :param product: ID or SKU of product
+        :param attribute: ID attribute
+        :return: List
+        """
+        return self.call('ol_catalog_product_link.setSuperAttributeValues',
+            [product, attribute])
+
+    def update(self, product, linked_products, attributes):
+        """
+        Configurable Update product
+
+        :param product: ID or SKU of product
+        :param linked_products: List ID or SKU of linked product to link
+        :param attributes: dicc
+        :return: True/False
+        """
+        return bool(self.call('ol_catalog_product_link.assign',
+            [product, linked_products, attributes]))
+
+    def remove(self, product, linked_products):
+        """
+        Remove a product link configurable
+
+        :param product: ID or SKU of product
+        :param linked_products: List ID or SKU of linked product to unlink
+        """
+        return bool(self.call('ol_catalog_product_link.remove',
+            [product, linked_products]))
+
+
 class Inventory(API):
     """
     Allows to update stock attributes (status, quantity)
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self, products):
         """
@@ -663,7 +809,7 @@ class Inventory(API):
         """
         return bool(
             self.call(
-                'cataloginventory_stock_item.update', 
+                'cataloginventory_stock_item.update',
                 [product, data]
                 )
             )

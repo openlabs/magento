@@ -9,6 +9,7 @@
     :license: AGPLv3, see LICENSE for more details
 '''
 
+
 def expand_url(url, protocol):
     """
     Expands the given URL to a full URL by adding

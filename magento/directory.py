@@ -15,7 +15,7 @@ class Country(API):
     """
     Country API to connect to magento
     """
-    __slots__ = ( )
+    __slots__ = ()
 
     def list(self):
         """
