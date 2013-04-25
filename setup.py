@@ -4,41 +4,24 @@
     Magento API
 
     :copyright: (c) 2010 by Sharoon Thomas.
-    :copyright: (c) 2010 by Openlabs Technologies & Consulting (P) LTD
+    :copyright: (c) 2010-2013 by Openlabs Technologies & Consulting (P) LTD
     :license: AGPLv3, see LICENSE for more details
 
-    A simple to use python library to access the magento API and
-    covered by a complete test suite based on Nose tests. Also
-    includes a nose plugin to do the tests based on a config
-    file.
-
-    Example usage::
-    
-        from magento import Customer
-        url = 'http://yourmagento.com'
-        apiuser = 'apiusername'
-        apipass = 'password'
-        with Customer(url, apiuser, apipass) as customer_api:
-            customer_api.list()
-
-    The implemented methods and APIs are from the Core API of 
-    magento documented here: 
-    
-    http://www.magentocommerce.com/support/magento_core_api
-
 '''
+import os
 from setuptools import setup
-import magento
+
+execfile(os.path.join('magento', 'version.py'))
 
 setup(
     name = 'magento',
-    version=magento.__version__,
-    url='http://projects.openlabs.co.in/trac/openlabs_magento',
+    version=VERSION,
+    url='https://github.com/openlabs/magento/',
     license='GNU Affero General Public License v3',
     author='Sharoon Thomas, Openlabs Technologies',
     author_email='info@openlabs.co.in',
     description='Magento Core API Client',
-    long_description=__doc__,
+    long_description=open('README.rst').read(),
     packages=['magento'],
     zip_safe=False,
     platforms='any',
@@ -46,7 +29,7 @@ setup(
         'suds>=0.3.9',
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 6 - Mature',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Affero General Public License v3', 
