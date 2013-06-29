@@ -39,6 +39,14 @@ Usage
         status = 'canceled'
         order_api.addcomment(order_increment_id, status)
 
+    with magento.Store(url, apiuser, apipass) as store_api:
+        store_id = '1'
+        store_view_info = store_api.info(store_id)
+        store_views = store_api.list()
+
+     with magento.Magento(url, apiuser, apipass) as magento_api:
+        magento_info = magento_api.info()
+
 
 License
 -------

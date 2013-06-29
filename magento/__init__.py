@@ -7,7 +7,7 @@
     :license: AGPLv3, see LICENSE for more details
 '''
 __all__ = [
-            'API',
+            'API', 'Store', 'Magento',
             'Customer', 'CustomerGroup', 'CustomerAddress',
             'Country', 'Region',
             'Category', 'CategoryAttribute', 'Product', 'ProductAttribute',
@@ -17,6 +17,7 @@ __all__ = [
             ]
 
 from .api import API
+from .miscellaneous import Store, Magento
 from .customer import Customer, CustomerGroup, CustomerAddress
 from .directory import Country, Region
 from .catalog import Category, CategoryAttribute
