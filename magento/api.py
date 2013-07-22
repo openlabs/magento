@@ -109,7 +109,7 @@ class API(object):
         """
         assert protocol \
             in PROTOCOLS, "protocol must be %s" % ' OR '.join(PROTOCOLS)
-        self.url = full_url and url or expand_url(url, protocol)
+        self.url = str(full_url and url or expand_url(url, protocol))
         self.username = username
         self.password = password
         self.protocol = protocol
