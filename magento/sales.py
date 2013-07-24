@@ -204,6 +204,19 @@ class Shipment(API):
     #: A proxy for :meth:`getcarriers`
     getCarriers = getcarriers
 
+    def sendinfo(self, shipment_increment_id, comment=''):
+        """
+        Send email with shipment data to customer
+
+        :param order_increment_id: Order ID
+        """
+        return self.call(
+            'sales_order_shipment.sendInfo', [shipment_increment_id, comment]
+        )
+
+    #: A proxy for :meth:`sendinfo`
+    sendInfo = sendinfo
+
 
 class Invoice(API):
     """
