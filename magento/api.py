@@ -31,14 +31,6 @@ class API(object):
     """
     Generic API to connect to magento
     """
-    __slots__ = (
-        'url',
-        'username',
-        'password',
-        'session',
-        'client',
-        'protocol',
-    )
 
     def __init__(self, url, username, password,
                  version='1.3.2.4', full_url=False, protocol='xmlrpc'):
@@ -52,8 +44,6 @@ class API(object):
            from magento.api import API
 
             class Core(API):
-
-                __slots__ = ( )
 
                 def websites(self):
                     return self.call('ol_websites.list', [])
@@ -113,6 +103,7 @@ class API(object):
         self.username = username
         self.password = password
         self.protocol = protocol
+        self.version = version
         self.session = None
         self.client = None
 
@@ -171,3 +162,4 @@ class API(object):
             return self.client.multiCall(self.session, calls)
         else:
             return self.client.service.multiCall(self.session, calls)
+
