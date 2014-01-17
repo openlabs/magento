@@ -33,7 +33,7 @@ class API(object):
     """
 
     def __init__(self, url, username, password,
-                 version='1.3.2.4', full_url=False, protocol='xmlrpc'):
+                 version='1.3.2.4', full_url=False, protocol='xmlrpc', transport=None):
         """
         This is the Base API class which other APIs have to subclass. By
         default the inherited classes also get the properties of this
@@ -96,6 +96,8 @@ class API(object):
         :param full_url: If set to true, then the `url` is expected to
                     be a complete URL
         :param protocol: 'xmlrpc' and 'soap' are valid values
+        :param transport: optional xmlrpclib.Transport subclass for
+                    use in xmlrpc requests
         """
         assert protocol \
             in PROTOCOLS, "protocol must be %s" % ' OR '.join(PROTOCOLS)
@@ -104,6 +106,7 @@ class API(object):
         self.password = password
         self.protocol = protocol
         self.version = version
+        self.transport = transport
         self.session = None
         self.client = None
 
@@ -113,7 +116,11 @@ class API(object):
         but does not login. This could be used as a connection test
         """
         if self.protocol == 'xmlrpc':
-            self.client = ServerProxy(self.url, allow_none=True)
+            if self.transport:
+                self.client = ServerProxy(
+                    self.url, allow_none=True, transport=self.transport)
+            else:
+                self.client = ServerProxy(self.url, allow_none=True)
         else:
             self.client = Client(self.url)
 
