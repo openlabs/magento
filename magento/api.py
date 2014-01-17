@@ -96,6 +96,8 @@ class API(object):
         :param full_url: If set to true, then the `url` is expected to
                     be a complete URL
         :param protocol: 'xmlrpc' and 'soap' are valid values
+        :param transport: optional xmlrpclib.Transport subclass for
+                    use in xmlrpc requests
         """
         assert protocol \
             in PROTOCOLS, "protocol must be %s" % ' OR '.join(PROTOCOLS)
