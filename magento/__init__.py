@@ -10,6 +10,9 @@ __all__ = [
             'API', 'Store', 'Magento',
             'Customer', 'CustomerGroup', 'CustomerAddress',
             'Country', 'Region',
+            'Cart', 'CartCoupon', 'CartCustomer',
+            'CartPayment', 'CartProduct', 'CartShipping'
+            
             'Category', 'CategoryAttribute', 'Product', 'ProductAttribute',
             'ProductAttributeSet', 'ProductTypes', 'ProductImages',
             'ProductTierPrice', 'ProductLinks', 'ProductConfigurable',
@@ -19,6 +22,8 @@ __all__ = [
 
 from .api import API
 from .client import Client
+from .checkout import Cart, CartCoupon, CartCustomer
+from .checkout import CartPayment, CartProduct, CartShipping
 from .miscellaneous import Store, Magento
 from .customer import Customer, CustomerGroup, CustomerAddress
 from .directory import Country, Region
