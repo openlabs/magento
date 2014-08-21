@@ -11,7 +11,7 @@ __all__ = [
             'Customer', 'CustomerGroup', 'CustomerAddress',
             'Country', 'Region',
             'Cart', 'CartCoupon', 'CartCustomer',
-            'CartPayment', 'CartProduct', 'CartShipping'
+            'CartPayment', 'CartProduct', 'CartShipping',
             
             'Category', 'CategoryAttribute', 'Product', 'ProductAttribute',
             'ProductAttributeSet', 'ProductTypes', 'ProductImages',
