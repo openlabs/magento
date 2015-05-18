@@ -33,6 +33,29 @@ class Order(API):
         """
         return self.call('sales_order.list', [filters])
 
+    def search(self, filters=None, fields=None, limit=None, page=1):
+        """
+        Retrieve order list by options using search api. Using this result can
+        be paginated
+
+        :param options: Dictionary of options.
+
+        :param filters: `{<attribute>:{<operator>:<value>}}`
+        :param fields: [<String: magento field names>, ...]
+        :param limit: `page limit`
+        :param page: `current page`
+
+        :return: `list` of `dict`
+        """
+        options = {
+            'imported': False,
+            'filters': filters or {},
+            'fields': fields or [],
+            'limit': limit or 1000,
+            'page': page,
+        }
+        return self.call('sales_order.search', [options])
+
     def info(self, order_increment_id):
         """
         Retrieve order info
@@ -203,6 +226,19 @@ class Shipment(API):
 
     #: A proxy for :meth:`getcarriers`
     getCarriers = getcarriers
+
+    def sendinfo(self, shipment_increment_id, comment=''):
+        """
+        Send email with shipment data to customer
+
+        :param order_increment_id: Order ID
+        """
+        return self.call(
+            'sales_order_shipment.sendInfo', [shipment_increment_id, comment]
+        )
+
+    #: A proxy for :meth:`sendinfo`
+    sendInfo = sendinfo
 
 
 class Invoice(API):
